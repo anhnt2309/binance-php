@@ -13,6 +13,59 @@ class User extends Request
     protected $signature = true;
 
     /**
+     * Get Detail on Sub-account's Futures Account (For Master Account)
+    GET /sapi/v1/sub-account/futures/account  (HMAC SHA256)
+     * */
+    public function getSubAccountFutureAccount(string $email)
+    {
+        $this->type = 'GET';
+        $this->path = '/sapi/v1/sub-account/futures/account';
+        $params = [
+            "email" => $email,
+        ];
+        $params['timestamp'] = time() . '000';
+        $this->data = $params;
+        return $this->exec();
+    }
+
+    /**
+     * Query Sub-account Assets(For Master Account)
+    GET /sapi/v3/sub-account/assets  (HMAC SHA256)
+     * */
+    public function getSubAccountSpotAssets(string $email)
+    {
+        $this->type = 'GET';
+        $this->path = '/sapi/v3/sub-account/assets';
+        $params = [
+            "email" => $email,
+        ];
+        $params['timestamp'] = time() . '000';
+        $this->data = $params;
+        return $this->exec();
+    }
+
+    /**
+     * Universal Transfer (For Master Account) (USER_DATA)
+    GET /sapi/v1/sub-account/universalTransfer  (HMAC SHA256)
+     * */
+    public function subAccountUniversalTransfer(string $fromEmail, string $toEmail, string $fromAccountType, string $toAccountType, string $asset, $amount)
+    {
+        $this->type = 'POST';
+        $this->path = '/sapi/v1/sub-account/universalTransfer';
+        $params = [
+            "fromEmail" => $fromEmail,
+            "toEmail" => $toEmail,
+            "fromAccountType" => $fromAccountType,
+            "toAccountType" => $toAccountType,
+            "asset" => $asset,
+            "amount" => $amount,
+        ];
+        $params['timestamp'] = time() . '000';
+        $this->data = $params;
+        return $this->exec();
+    }
+
+    /**
      * 查看账户当前挂单 (USER_DATA)
     GET /sapi/v1/sub-account/transfer/subToSub  (HMAC SHA256)
      * */
